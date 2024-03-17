@@ -7,13 +7,13 @@ import (
 )
 
 // Catch Pokemon -
-func (c *Client) CatchPokemon(pokemon string) (RespShallowPokemon, error) {
+func (c *Client) CatchPokemon(pokemon string) (Pokemon, error) {
 	url := "https://pokeapi.co/api/v2/pokemon/" + pokemon
 	if val, ok := c.cache.Get(url); ok {
-		pokemonResp := RespShallowPokemon{}
+		pokemonResp := Pokemon{}
 		err := json.Unmarshal(val, &pokemonResp)
 		if err != nil {
-			return RespShallowPokemon{}, err
+			return Pokemon{}, err
 		}
 
 		return pokemonResp, nil
@@ -21,26 +21,27 @@ func (c *Client) CatchPokemon(pokemon string) (RespShallowPokemon, error) {
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return RespShallowPokemon{}, err
+		return Pokemon{}, err
 	}
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
-		return RespShallowPokemon{}, err
+		return Pokemon{}, err
 	}
 	defer resp.Body.Close()
 
 	dat, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return RespShallowPokemon{}, err
+		return Pokemon{}, err
 	}
 
-	locationResp := RespShallowPokemon{}
-	err = json.Unmarshal(dat, &locationResp)
+	pokemonResp := Pokemon{}
+	err = json.Unmarshal(dat, &pokemonResp)
 	if err != nil {
-		return RespShallowPokemon{}, err
+		return Pokemon{}, err
 	}
 
 	c.cache.Add(url, dat)
-	return locationResp, nil
+
+	return pokemonResp, nil
 }
