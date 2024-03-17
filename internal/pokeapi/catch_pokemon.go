@@ -6,7 +6,6 @@ import (
 	"net/http"
 )
 
-// Catch Pokemon -
 func (c *Client) CatchPokemon(pokemon string) (Pokemon, error) {
 	url := "https://pokeapi.co/api/v2/pokemon/" + pokemon
 	if val, ok := c.cache.Get(url); ok {

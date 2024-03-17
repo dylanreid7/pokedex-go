@@ -1,6 +1,5 @@
 package pokeapi
 
-// Pokemon -
 type Pokemon struct {
 	Abilities []struct {
 		Ability struct {

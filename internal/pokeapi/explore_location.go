@@ -6,7 +6,6 @@ import (
 	"net/http"
 )
 
-// ListLocations -
 func (c *Client) ExploreLocation(location string) (RespShallowLocation, error) {
 	url := baseURL + "/location-area/" + location
 	if val, ok := c.cache.Get(url); ok {

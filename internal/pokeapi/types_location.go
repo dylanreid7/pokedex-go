@@ -1,6 +1,5 @@
 package pokeapi
 
-// RespShallowLocation -
 type RespShallowLocation struct {
 	EncounterMethodRates []struct {
 		EncounterMethod struct {
